@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
-
-const getCourseNumber = (course) => course.id.slice(1);
+import { getCourseNumber } from "../utils/course";
 
 export function Course({ course, isSelected, select }) {
   return (
