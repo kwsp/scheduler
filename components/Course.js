@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     margin: 10,
     height: 60,
     padding: 10,
-    minWidth: 90,
-    maxWidth: 90,
+    minWidth: 100,
+    maxWidth: 100,
     backgroundColor: "#66b0ff",
   },
   courseText: {
