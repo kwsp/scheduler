@@ -2,12 +2,18 @@ import React from "react";
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { getCourseNumber } from "../utils/course";
 
-export function Course({ course, isSelected, select }) {
+export function Course({ course, isDisabled, isSelected, select }) {
   return (
     <TouchableOpacity
-      style={isSelected ? styles.courseButtonSelected : styles.courseButton}
+      style={
+        isSelected
+          ? styles.courseButtonSelected
+          : isDisabled
+          ? styles.courseButtonDisabled
+          : styles.courseButton
+      }
       onPress={() => {
-        select(course);
+        if (!isDisabled) select(course);
       }}
     >
       <Text style={styles.courseText}>
@@ -36,6 +42,10 @@ const styles = StyleSheet.create({
   courseButtonSelected: {
     ...courseButtonBase,
     backgroundColor: "#004a99",
+  },
+  courseButtonDisabled: {
+    ...courseButtonBase,
+    backgroundColor: "#d3d3d3",
   },
   courseText: {
     color: "#fff",
