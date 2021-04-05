@@ -3,9 +3,14 @@ import { Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const getCourseNumber = (course) => course.id.slice(1);
 
-export function Course({ course }) {
+export function Course({ course, isSelected, select }) {
   return (
-    <TouchableOpacity style={styles.courseButton}>
+    <TouchableOpacity
+      style={isSelected ? styles.courseButtonSelected : styles.courseButton}
+      onPress={() => {
+        select(course);
+      }}
+    >
       <Text style={styles.courseText}>
         {`CS ${getCourseNumber(course)}\n${course.meets}`}
       </Text>
@@ -13,17 +18,25 @@ export function Course({ course }) {
   );
 }
 
+const courseButtonBase = {
+  borderRadius: 5,
+  justifyContent: "center",
+  alignItems: "center",
+  margin: 10,
+  height: 60,
+  padding: 10,
+  minWidth: 100,
+  maxWidth: 100,
+};
+
 const styles = StyleSheet.create({
   courseButton: {
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 10,
-    height: 60,
-    padding: 10,
-    minWidth: 100,
-    maxWidth: 100,
+    ...courseButtonBase,
     backgroundColor: "#66b0ff",
+  },
+  courseButtonSelected: {
+    ...courseButtonBase,
+    backgroundColor: "#004a99",
   },
   courseText: {
     color: "#fff",
