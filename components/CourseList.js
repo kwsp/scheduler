@@ -5,7 +5,7 @@ import { Course } from "./Course";
 import CourseSelector from "./CourseSelector";
 import TermSelector from "./TermSelector";
 
-export function CourseList({ courses }) {
+export function CourseList({ courses, view }) {
   const [selectedTerm, setSelectedTerm] = useState("Fall");
 
   const termCourses = courses.filter(
@@ -19,7 +19,7 @@ export function CourseList({ courses }) {
         selectedTerm={selectedTerm}
         setSelectedTerm={setSelectedTerm}
       />
-      <CourseSelector courses={termCourses} />
+      <CourseSelector courses={termCourses} view={view} />
     </ScrollView>
   );
 }
