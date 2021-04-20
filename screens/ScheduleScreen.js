@@ -1,17 +1,22 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 import { CourseList } from "../components/CourseList";
+import UserContext from "../UserContext";
 
 const Banner = ({ title }) => (
   <Text style={styles.bannerStyle}>{title || "[loading...]"}</Text>
 );
 
 const ScheduleScreen = ({ navigation }) => {
+  const user = useContext(UserContext);
+  const canEdit = user && user.role === "admin";
   const [schedule, setSchedule] = useState({ title: "", courses: [] });
 
   const view = (course) => {
-    navigation.navigate("CourseDetailScreen", { course });
+    navigation.navigate(canEdit ? "CourseEditScreen" : "CourseDetailScreen", {
+      course,
+    });
   };
 
   const url = "https://courses.cs.northwestern.edu/394/data/cs-courses.php";
