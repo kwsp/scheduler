@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Form from "../components/Form";
 import * as Yup from "yup";
+import { firebase } from "../firebase";
 
 const validationSchema = Yup.object().shape({
   id: Yup.string()
@@ -22,6 +23,21 @@ const validationSchema = Yup.object().shape({
 const CourseEditScreen = ({ navigation, route }) => {
   const course = route.params.course;
 
+  const [submitError, setSubmitError] = useState("");
+
+  async function handleSubmit(values) {
+    const { id, meets, title } = values;
+    const course = { id, meets, title };
+    firebase
+      .database()
+      .ref("courses")
+      .child(id)
+      .set(course)
+      .catch((err) => {
+        setSubmitError(err);
+      });
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -32,6 +48,7 @@ const CourseEditScreen = ({ navigation, route }) => {
             title: course.title,
           }}
           validationSchema={validationSchema}
+          onSubmit={(values) => handleSubmit(values)}
         >
           <Form.Field
             name="id"
@@ -54,6 +71,8 @@ const CourseEditScreen = ({ navigation, route }) => {
             placeholder="Introduction to programming"
             style={styles.field}
           />
+          <Form.Button title={"Update"} />
+          <Form.ErrorMessage error={submitError} />
         </Form>
       </ScrollView>
     </SafeAreaView>
