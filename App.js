@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import CourseDetailScreen from "./screens/CourseDetailScreen";
 import UserContext from "./UserContext";
 import CourseEditScreen from "./screens/CourseEditScreen";
+import RegisterScreen from "./screens/RegisterScreen";
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,11 @@ const App = () => {
             name="CourseEditScreen"
             component={CourseEditScreen}
             options={{ title: "Course Editor" }}
+          />
+          <Stack.Screen
+            name="RegisterScreen"
+            component={RegisterScreen}
+            options={{ title: "Register" }}
           />
         </Stack.Navigator>
       </NavigationContainer>
