@@ -17,15 +17,15 @@ const validationSchema = Yup.object().shape({
   ),
 });
 
-export default function RegisterScreen({ navigation, route }) {
+export default function RegisterScreen({ navigation }) {
   const [signInError, setSignInError] = useState("");
 
   const loginWithEmail = async (email, password) => {
-    await firebase.auth().signInWithEmailAndPassword(email, password);
+    firebase.auth().signInWithEmailAndPassword(email, password);
   };
 
   const registerWithEmail = async (email, password) => {
-    await firebase.auth().createUserWithEmailAndPassword(email, password);
+    firebase.auth().createUserWithEmailAndPassword(email, password);
   };
 
   async function handleOnLogin({ email, password }) {
@@ -34,10 +34,7 @@ export default function RegisterScreen({ navigation, route }) {
       await loginWithEmail(email, password);
       navigation.navigate("ScheduleScreen");
     } catch (err) {
-      const code = err.code;
-      const msg = err.message;
-      console.log(code, msg);
-      setSignInError(msg);
+      setSignInError(err.message);
     }
   }
 
@@ -49,10 +46,7 @@ export default function RegisterScreen({ navigation, route }) {
       await user.updateProfile({ displayName: name });
       navigation.navigate("ScheduleScreen");
     } catch (err) {
-      const code = err.code;
-      const msg = err.message;
-      console.log(code, msg);
-      setSignInError(msg);
+      setSignInError(err.message);
     }
   }
 
